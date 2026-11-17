@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificate Verification &mdash; Prosper Mudzamiri</title>
+<meta name="description" content="Official certificate verification for Prosper Mudzamiri, IWH Rope Access Technician.">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --navy:#1f3a68;
+    --navy-dark:#14264a;
+    --gold:#e8b71a;
+    --gold-soft:#f5c518;
+    --green:#1f8a4c;
+    --green-bg:#e6f4ec;
+    --gray-50:#f8fafc;
+    --gray-100:#f1f5f9;
+    --gray-200:#e2e8f0;
+    --gray-400:#94a3b8;
+    --gray-600:#475569;
+    --gray-800:#1e293b;
+    --shadow:0 4px 12px rgba(15,23,42,.08),0 2px 4px rgba(15,23,42,.04);
+    --shadow-lg:0 12px 32px rgba(15,23,42,.12),0 4px 8px rgba(15,23,42,.06);
+  }
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    background:var(--gray-100);
+    color:var(--gray-800);
+    line-height:1.5;
+    min-height:100vh;
+    padding:24px 16px;
+  }
+  .wrap{max-width:760px;margin:0 auto}
+
+  /* Header */
+  .header{
+    background:#fff;
+    border-top:4px solid var(--gold);
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    padding:24px 28px;
+    text-align:center;
+    margin-bottom:20px;
+  }
+  .crest{
+    width:56px;height:56px;
+    margin:0 auto 10px;
+    background:linear-gradient(135deg,var(--gold-soft),var(--gold));
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--navy-dark);font-weight:800;font-size:18px;
+    box-shadow:inset 0 0 0 3px rgba(255,255,255,.6);
+  }
+  .header h1{
+    font-size:18px;color:var(--navy);font-weight:700;letter-spacing:.4px;
+  }
+  .header p{
+    color:var(--gray-600);font-size:13px;margin-top:4px;
+  }
+
+  /* Status banner */
+  .status{
+    background:var(--green-bg);
+    border:1px solid #b6dcc6;
+    border-radius:10px;
+    padding:14px 18px;
+    display:flex;align-items:center;gap:14px;
+    margin-bottom:20px;
+  }
+  .status .dot{
+    width:12px;height:12px;border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 0 4px rgba(31,138,76,.15);
+    flex-shrink:0;
+  }
+  .status .label{font-weight:600;color:var(--green);font-size:14px;letter-spacing:.6px;text-transform:uppercase}
+  .status .desc{color:var(--gray-600);font-size:13px}
+
+  /* Main card */
+  .card{
+    background:#fff;
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    padding:24px 26px;
+    margin-bottom:18px;
+  }
+  .card h2{
+    font-size:13px;color:var(--gray-400);text-transform:uppercase;letter-spacing:1.2px;
+    font-weight:600;margin-bottom:14px;
+    border-bottom:1px solid var(--gray-200);padding-bottom:10px;
+  }
+
+  /* Holder name */
+  .holder-name{
+    font-size:26px;font-weight:700;color:var(--navy-dark);
+    margin-bottom:4px;line-height:1.2;
+  }
+  .holder-role{
+    color:var(--gray-600);font-size:14px;margin-bottom:18px;
+  }
+  .holder-role strong{color:var(--navy)}
+
+  /* Detail rows */
+  .grid{
+    display:grid;grid-template-columns:1fr;gap:0;
+  }
+  .row{
+    display:flex;justify-content:space-between;align-items:flex-start;
+    padding:12px 0;border-bottom:1px dashed var(--gray-200);
+    gap:14px;
+  }
+  .row:last-child{border-bottom:none}
+  .row .k{
+    color:var(--gray-600);font-size:13px;font-weight:500;
+    flex-shrink:0;min-width:140px;
+  }
+  .row .v{
+    color:var(--gray-800);font-weight:600;font-size:14px;
+    text-align:right;word-break:break-word;
+  }
+  .row .v.mono{font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;font-size:13px}
+
+  /* QR panel */
+  .qr-panel{
+    display:flex;align-items:center;gap:18px;
+    background:var(--gray-50);
+    border-radius:10px;padding:16px;
+    margin-top:14px;
+  }
+  .qr-panel img{
+    width:120px;height:120px;border:1px solid var(--gray-200);border-radius:6px;background:#fff;
+  }
+  .qr-panel .qr-text{font-size:12px;color:var(--gray-600);line-height:1.5}
+  .qr-panel .qr-text strong{display:block;color:var(--navy-dark);font-size:13px;margin-bottom:2px}
+
+  /* Issuer row */
+  .issuer{
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .issuer .item{
+    background:var(--gray-50);border-radius:8px;padding:10px 14px;
+  }
+  .issuer .item .k{font-size:11px;color:var(--gray-400);text-transform:uppercase;letter-spacing:.8px;font-weight:600}
+  .issuer .item .v{font-size:14px;color:var(--gray-800);font-weight:600;margin-top:2px}
+
+  /* Footer */
+  .meta{
+    text-align:center;color:var(--gray-400);font-size:11px;
+    padding:14px;line-height:1.7;
+  }
+  .meta code{
+    background:var(--gray-100);padding:2px 6px;border-radius:4px;
+    font-size:11px;color:var(--gray-600);
+  }
+  .meta a{color:var(--navy);text-decoration:none}
+  .meta a:hover{text-decoration:underline}
+
+  /* Back link */
+  .back{
+    display:inline-flex;align-items:center;gap:6px;
+    color:var(--navy);font-size:13px;font-weight:500;
+    text-decoration:none;margin-bottom:14px;
+  }
+  .back:hover{text-decoration:underline}
+
+  @media(min-width:560px){
+    .row .k{min-width:160px}
+    .issuer{flex-direction:row}
+    .issuer .item{flex:1}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back" href="../../index.html">&larr; All verifications</a>
+
+  <div class="header">
+    <div class="crest">IWH</div>
+    <h1>Institute for Work at Height</h1>
+    <p>Professional Body &middot; Certificate Verification Portal</p>
+  </div>
+
+  <div class="status">
+    <span class="dot"></span>
+    <div>
+      <div class="label">Status: Valid</div>
+      <div class="desc">This certificate is active and in good standing until 28 January 2029.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Certificate Holder</h2>
+    <div class="holder-name">Prosper Mudzamiri</div>
+    <div class="holder-role">Certified <strong>Work at Height Technician</strong> specialising as a <strong>Rope Access Technician</strong></div>
+
+    <div class="grid">
+      <div class="row">
+        <span class="k">ID Number</span>
+        <span class="v mono">43-20037788J27</span>
+      </div>
+      <div class="row">
+        <span class="k">Registration No.</span>
+        <span class="v mono">DM 154752/19</span>
+      </div>
+      <div class="row">
+        <span class="k">Date Issued</span>
+        <span class="v">28 January 2026</span>
+      </div>
+      <div class="row">
+        <span class="k">Expiry Date</span>
+        <span class="v">28 January 2029</span>
+      </div>
+      <div class="row">
+        <span class="k">Certificate Serial</span>
+        <span class="v mono">IWH 045089</span>
+      </div>
+      <div class="row">
+        <span class="k">Verification URL</span>
+        <span class="v mono" style="font-size:11px">verify.heightsafety.co.za/cert/DM154752-19</span>
+      </div>
+    </div>
+
+    <div class="qr-panel">
+      <img src="../../assets/qr_prosper.png" alt="QR code linking back to this verification page">
+      <div class="qr-text">
+        <strong>Scan to verify</strong>
+        The QR on the printed certificate links directly to this page. If the scanned URL does not match the address shown above, the document may not be authentic.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Issuing Bodies</h2>
+    <div class="issuer">
+      <div class="item">
+        <div class="k">Professional Body</div>
+        <div class="v">Institute for Work at Height (IWH)</div>
+      </div>
+      <div class="item">
+        <div class="k">Training Academy</div>
+        <div class="v">Heightsafety Training Academy (Pty) Ltd</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--gray-600);margin-top:12px;line-height:1.6">
+      IWH is a South African Qualifications Authority (SAQA) recognised professional body. The designation <em>Work at Height Technician</em> is registered on the National Qualifications Framework.
+    </p>
+  </div>
+
+  <div class="meta">
+    Verified on <span id="ts">&mdash;</span><br>
+    Page URL: <code id="url">&mdash;</code><br>
+    For authenticity concerns contact the registrar at the issuing body above.
+  </div>
+
+</div>
+
+<script>
+  (function(){
+    var ts = document.getElementById('ts');
+    var url = document.getElementById('url');
+    if (ts) {
+      var d = new Date();
+      var s = d.toLocaleString('en-GB',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',timeZoneName:'short'});
+      ts.textContent = s + ' (server time)';
+    }
+    if (url) {
+      url.textContent = window.location.href;
+    }
+  })();
+</script>
+</body>
+</html>
