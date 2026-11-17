@@ -3,164 +3,131 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IWH Certificate Verification Portal</title>
-<meta name="description" content="Verify the authenticity of Institute for Work at Height (IWH) Rope Access Technician certificates.">
+<title>Member Verification</title>
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  :root{
-    --navy:#1f3a68;
-    --navy-dark:#14264a;
-    --gold:#e8b71a;
-    --gold-soft:#f5c518;
-    --gray-50:#f8fafc;
-    --gray-100:#f1f5f9;
-    --gray-200:#e2e8f0;
-    --gray-400:#94a3b8;
-    --gray-600:#475569;
-    --gray-800:#1e293b;
-    --shadow:0 4px 12px rgba(15,23,42,.08),0 2px 4px rgba(15,23,42,.04);
+  html,body{
+    background:#FFFFFF;
+    color:#8A8A8A;
+    font-family:Roboto,Arial,system-ui,-apple-system,sans-serif;
+    font-weight:400;
+    font-size:14px;
+    line-height:1.4;
+    -webkit-font-smoothing:antialiased;
   }
-  body{
-    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-    background:var(--gray-100);
-    color:var(--gray-800);
-    line-height:1.5;
-    min-height:100vh;
-    padding:32px 16px;
+  body{padding:16px 12px;}
+  .top-rule{
+    border-top:1px solid #E0E0E0;
+    margin-bottom:36px;
   }
-  .wrap{max-width:760px;margin:0 auto}
-  .header{
-    background:#fff;
-    border-top:4px solid var(--gold);
-    border-radius:12px;
-    box-shadow:var(--shadow);
-    padding:32px 28px;
-    text-align:center;
-    margin-bottom:24px;
+  .row{
+    display:flex;
+    align-items:flex-start;
+    margin-bottom:32px;
   }
-  .crest{
-    width:64px;height:64px;margin:0 auto 14px;
-    background:linear-gradient(135deg,var(--gold-soft),var(--gold));
-    border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    color:var(--navy-dark);font-weight:800;font-size:20px;
-    box-shadow:inset 0 0 0 3px rgba(255,255,255,.6);
+  .row .label{
+    width:48%;
+    color:#8A8A8A;
+    font-weight:400;
   }
-  .header h1{font-size:22px;color:var(--navy);font-weight:700;letter-spacing:.3px;margin-bottom:6px}
-  .header p{color:var(--gray-600);font-size:14px;max-width:520px;margin:0 auto}
-
-  .section-title{
-    font-size:12px;color:var(--gray-400);text-transform:uppercase;
-    letter-spacing:1.4px;font-weight:600;
-    margin:8px 4px 12px;
+  .row .value{
+    width:52%;
+    color:#8A8A8A;
+    font-weight:400;
   }
-
-  .cert-list{display:grid;grid-template-columns:1fr;gap:14px;}
-  .cert{
-    background:#fff;border-radius:12px;box-shadow:var(--shadow);
-    padding:18px 20px;display:flex;align-items:center;gap:16px;
-    text-decoration:none;color:inherit;
-    border:1px solid transparent;
-    transition:border-color .15s,transform .15s;
+  .row .value a{
+    color:#8A8A8A;
+    text-decoration:none;
   }
-  .cert:hover{border-color:var(--gold-soft);transform:translateY(-1px);}
-  .cert .qr{
-    width:64px;height:64px;border:1px solid var(--gray-200);
-    border-radius:6px;background:#fff;flex-shrink:0;
+  .row .value a:hover{
+    text-decoration:underline;
   }
-  .cert .info{flex:1;min-width:0}
-  .cert .name{font-size:17px;font-weight:700;color:var(--navy-dark);margin-bottom:2px}
-  .cert .role{font-size:12px;color:var(--gray-600);margin-bottom:6px}
-  .cert .meta-row{
-    display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--gray-400);
+  .section-header{
+    font-weight:700;
+    color:#8A8A8A;
+    margin-top:8px;
+    margin-bottom:20px;
   }
-  .cert .meta-row span{display:inline-flex;align-items:center;gap:4px}
-  .cert .meta-row strong{color:var(--gray-800);font-weight:600;font-family:'SFMono-Regular',Consolas,monospace}
-  .cert .arrow{color:var(--gray-400);font-size:20px;font-weight:300;flex-shrink:0}
-
-  .badge{
-    display:inline-block;font-size:10px;font-weight:700;
-    padding:3px 8px;border-radius:999px;letter-spacing:.6px;
-    background:#e6f4ec;color:#1f8a4c;text-transform:uppercase;
-    margin-left:8px;vertical-align:middle;
+  .sub-table{
+    display:flex;
+    margin-top:4px;
   }
-
-  .info-box{
-    background:#fff;border-radius:12px;box-shadow:var(--shadow);
-    padding:22px 24px;margin-top:24px;
+  .sub-table .col{
+    width:52%;
   }
-  .info-box h2{
-    font-size:13px;color:var(--gray-400);text-transform:uppercase;
-    letter-spacing:1.2px;font-weight:600;margin-bottom:10px;
+  .sub-table .col:first-child{
+    width:48%;
   }
-  .info-box p{font-size:13px;color:var(--gray-600);line-height:1.7}
-  .info-box ul{margin:10px 0 0;padding-left:18px;color:var(--gray-600);font-size:13px;line-height:1.8}
-
-  .meta{
-    text-align:center;color:var(--gray-400);font-size:11px;
-    padding:18px;line-height:1.7;
+  .sub-header{
+    color:#8A8A8A;
+    font-weight:400;
+    margin-bottom:28px;
   }
-  @media(min-width:560px){
-    .cert-list{grid-template-columns:1fr 1fr}
+  .sub-value{
+    color:#8A8A8A;
+    font-weight:400;
+  }
+  .member-block{
+    margin-bottom:48px;
+  }
+  .member-block:last-child{
+    margin-bottom:0;
   }
 </style>
 </head>
 <body>
-<div class="wrap">
+  <div class="top-rule"></div>
 
-  <div class="header">
-    <div class="crest">IWH</div>
-    <h1>Certificate Verification Portal</h1>
-    <p>Verify the authenticity of Institute for Work at Height (IWH) Rope Access Technician certificates by scanning the QR code printed on the document or selecting a holder below.</p>
-  </div>
-
-  <div class="section-title">Registered certificate holders</div>
-
-  <div class="cert-list">
-
-    <a class="cert" href="cert/DM154752-19/">
-      <img class="qr" src="assets/qr_prosper.png" alt="QR code for Prosper Mudzamiri">
-      <div class="info">
-        <div class="name">Prosper Mudzamiri <span class="badge">Valid</span></div>
-        <div class="role">Rope Access Technician</div>
-        <div class="meta-row">
-          <span>ID <strong>43-20037788J27</strong></span>
-          <span>Reg <strong>DM 154752/19</strong></span>
-        </div>
+  <div class="member-block">
+    <div class="row">
+      <div class="label">Member Name</div>
+      <div class="value"><a href="cert/DM154752-19/">Prosper Mudzamiri</a></div>
+    </div>
+    <div class="row">
+      <div class="label">ID Number</div>
+      <div class="value">43-20037788J27</div>
+    </div>
+    <div class="row">
+      <div class="label">Member Status</div>
+      <div class="value"></div>
+    </div>
+    <div class="section-header">Designations</div>
+    <div class="sub-table">
+      <div class="col">
+        <div class="sub-header">Name</div>
+        <div class="sub-value">Rope Access Technician</div>
       </div>
-      <span class="arrow">&rsaquo;</span>
-    </a>
-
-    <a class="cert" href="cert/DM174684-18/">
-      <img class="qr" src="assets/qr_tonderai.png" alt="QR code for Tonderai Muyengwa">
-      <div class="info">
-        <div class="name">Tonderai Muyengwa <span class="badge">Valid</span></div>
-        <div class="role">Rope Access Technician</div>
-        <div class="meta-row">
-          <span>ID <strong>43-32839V43</strong></span>
-          <span>Reg <strong>DM 174684/18</strong></span>
-        </div>
+      <div class="col">
+        <div class="sub-header">Expiry</div>
+        <div class="sub-value">2029-01-28</div>
       </div>
-      <span class="arrow">&rsaquo;</span>
-    </a>
-
+    </div>
   </div>
 
-  <div class="info-box">
-    <h2>How verification works</h2>
-    <p>Every printed certificate carries a unique QR code in the lower-left area of the document. Scanning it with any phone camera opens the matching verification page on this portal &mdash; a quick way to confirm the holder's identity, registration number, issue and expiry dates, and certificate serial.</p>
-    <ul>
-      <li>Check that the URL in the browser starts with <code>verify.heightsafety.co.za/cert/</code></li>
-      <li>Compare the printed name, ID and registration number with what's shown on the page</li>
-      <li>Confirm the status banner reads <strong>Valid</strong> and the expiry date has not passed</li>
-    </ul>
+  <div class="member-block">
+    <div class="row">
+      <div class="label">Member Name</div>
+      <div class="value"><a href="cert/DM174684-18/">Tonderai Muyengwa</a></div>
+    </div>
+    <div class="row">
+      <div class="label">ID Number</div>
+      <div class="value">43-32839V43</div>
+    </div>
+    <div class="row">
+      <div class="label">Member Status</div>
+      <div class="value"></div>
+    </div>
+    <div class="section-header">Designations</div>
+    <div class="sub-table">
+      <div class="col">
+        <div class="sub-header">Name</div>
+        <div class="sub-value">Rope Access Technician</div>
+      </div>
+      <div class="col">
+        <div class="sub-header">Expiry</div>
+        <div class="sub-value">2029-01-28</div>
+      </div>
+    </div>
   </div>
-
-  <div class="meta">
-    Institute for Work at Height &middot; Heightsafety Training Academy (Pty) Ltd<br>
-    SAQA-recognised professional body &middot; National Qualifications Framework
-  </div>
-
-</div>
 </body>
 </html>

@@ -47,22 +47,24 @@ vercel --prod              # production deploy
 
 ## Point the QR codes at your real domain
 
-The QR codes currently encode:
+The QR codes stamped on the PDFs encode:
 
-- `https://verify.heightsafety.co.za/cert/DM154752-19`
-- `https://verify.heightsafety.co.za/cert/DM174684-18`
+- `https://verify-heightsafety.vercel.app/cert/DM154752-19`
+- `https://verify-heightsafety.vercel.app/cert/DM174684-18`
 
-To make them resolve:
+When you deploy this folder to Vercel as a project named
+**`verify-heightsafety`**, Vercel auto-assigns the subdomain
+`verify-heightsafety.vercel.app` and the QR codes resolve immediately —
+no DNS configuration needed.
+
+If you later want a custom domain (e.g. `verify.heightsafety.co.za`):
 
 1. In the Vercel project, go to **Settings → Domains**.
-2. Add `verify.heightsafety.co.za` (or any domain you own).
-3. Follow Vercel's DNS instructions — typically add a `CNAME` record pointing
-   `verify` to `cname.vercel-dns.com` at your registrar.
-4. Once DNS propagates, scanning the QR on either certificate opens the
-   matching verification page.
-
-If you want a different domain (say `verify.yourcompany.co.za`), tell me and
-I'll regenerate both stamped PDFs so the QR codes point at the new URLs.
+2. Add `verify.heightsafety.co.za`.
+3. Add the `CNAME` record Vercel shows you at your DNS provider
+   (`verify` → `cname.vercel-dns.com`).
+4. Tell me the new domain so I can regenerate the stamped PDFs with QR
+   codes pointing at the new URLs.
 
 ## Adding more certificate holders later
 
