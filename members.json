@@ -1,22 +1,12 @@
 [
   {
-    "name": "Prosper Mudzamiri",
-    "id_number": "43-20037788J27",
-    "registration": "DM 154752/19",
+    "name": "Fixwell Chinyowa",
+    "id_number": "43-143607z43",
+    "registration": "DM 174652/54",
     "issue_date": "2026-01-28",
     "expiry_date": "2029-01-28",
     "designation": "Rope Access Technician",
-    "serial": "IWH 045089",
-    "png_path": "/tmp/seed_pngs/prosper-1.png"
-  },
-  {
-    "name": "Tonderai Muyengwa",
-    "id_number": "43-32839V43",
-    "registration": "DM 174684/18",
-    "issue_date": "2026-01-28",
-    "expiry_date": "2029-01-28",
-    "designation": "Rope Access Technician",
-    "serial": "IWH 045009",
-    "png_path": "/tmp/seed_pngs/tonderai-1.png"
+    "serial": "IWH 048089",
+    "png_path": "Fixwell.jpg"
   }
 ]
