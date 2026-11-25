@@ -8,20 +8,51 @@ a public verification page showing the holder's details and validity status.
 
 ```
 vercel-verify/
-├── index.html                       Landing page listing all holders
+├── index.html                       Landing page listing all holders (auto-generated)
+├── members.json                     Registry of all members (drives the landing page)
 ├── cert/
 │   ├── DM154752-19/index.html       Prosper Mudzamiri verification page
 │   └── DM174684-18/index.html       Tonderai Muyengwa verification page
-├── assets/
-│   ├── qr_prosper.png               Same QR that's stamped on Prosper's PDF
-│   └── qr_tonderai.png              Same QR that's stamped on Tonderai's PDF
-├── vercel.json                      Clean URLs + security headers
-└── README.md                        This file
+├── admin/                           Browser-based generator UI (see admin/README.md)
+│   ├── index.html                   Admin panel — open at /admin/ on the live site
+│   ├── admin.css
+│   ├── admin.js
+│   └── README.md
+└── vercel.json                      Clean URLs + security headers
 ```
 
 The URL paths (`/cert/DM154752-19/`, `/cert/DM174684-18/`) match exactly what
 the QR codes on the stamped PDFs encode, so scanning a certificate opens the
 correct page with no redirects.
+
+The `/admin/` folder is a browser-based UI for generating new stamped PDFs and
+verification pages without the Python CLI. Open it at
+`https://verify-heightsafety.vercel.app/admin/` — everything runs client-side,
+nothing is uploaded to any server.
+
+## How pages get here
+
+This project is maintained by the **`cert-generator`** CLI tool (in the
+sibling `../cert-generator/` folder). Don't edit `index.html` or the
+`cert/*/index.html` files by hand — they're auto-generated from templates and
+the `members.json` registry. To add or remove a member:
+
+```bash
+# From the cert-generator folder:
+python generate.py single \
+  --png /path/to/new_cert.png \
+  --name "New Member" \
+  --id "43-XXXXXXX" \
+  --reg "DM XXXXXX/XX" \
+  --issue 2026-01-28 \
+  --expiry 2029-01-28 \
+  --project ../vercel-verify \
+  --output ../download
+```
+
+The generator updates `members.json`, regenerates this `index.html`, writes
+the new `cert/<slug>/index.html`, and drops the stamped PDF in `../download/`.
+Then commit and push to deploy.
 
 ## Deploy to Vercel
 
@@ -52,10 +83,10 @@ The QR codes stamped on the PDFs encode:
 - `https://verify-heightsafety.vercel.app/cert/DM154752-19`
 - `https://verify-heightsafety.vercel.app/cert/DM174684-18`
 
-When you deploy this folder to Vercel as a project named
-**`verify-heightsafety`**, Vercel auto-assigns the subdomain
-`verify-heightsafety.vercel.app` and the QR codes resolve immediately —
-no DNS configuration needed.
+Your Vercel project is named `verify-heightsafety` (correctly spelled), and
+Vercel auto-assigns the matching subdomain `verify-heightsafety.vercel.app`.
+The QR codes resolve immediately once the project is deployed — no DNS
+configuration needed.
 
 If you later want a custom domain (e.g. `verify.heightsafety.co.za`):
 

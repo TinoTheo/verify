@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IWH Certificate Generator &mdash; Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <div class="crest">IWH</div>
+      <div>
+        <h1>Certificate Generator</h1>
+        <p>Institute for Work at Height &middot; Admin Panel</p>
+      </div>
+    </div>
+    <nav class="tabs">
+      <button class="tab active" data-tab="single">Add Member</button>
+      <button class="tab" data-tab="batch">Batch Upload</button>
+      <button class="tab" data-tab="members">Members</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- TAB: SINGLE -->
+  <section class="panel" id="tab-single">
+    <div class="card">
+      <div class="card-head">
+        <h2>Add a single member</h2>
+        <p>Upload the certificate PNG and fill in the holder's details. A stamped PDF, QR code and verification page will be generated for download.</p>
+      </div>
+
+      <form id="single-form" class="form-grid">
+
+        <div class="form-row full">
+          <label class="label">Certificate PNG</label>
+          <div class="dropzone" id="dropzone">
+            <input type="file" id="png-input" accept="image/png,image/jpeg" hidden>
+            <div class="dz-inner">
+              <div class="dz-icon">+</div>
+              <div class="dz-text">Drop a PNG or JPEG here, or <span class="link">browse</span></div>
+              <div class="dz-hint">PNG preferred. Landscape or portrait accepted; will be fit to A4.</div>
+            </div>
+          </div>
+          <div class="preview" id="png-preview" hidden>
+            <img id="png-preview-img" alt="Certificate preview">
+            <button type="button" class="btn-link" id="png-clear">Remove</button>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label class="label" for="f-name">Member Name <span class="req">*</span></label>
+          <input type="text" id="f-name" placeholder="e.g. Prosper Mudzamiri" required>
+        </div>
+
+        <div class="form-row">
+          <label class="label" for="f-id">ID Number <span class="req">*</span></label>
+          <input type="text" id="f-id" placeholder="e.g. 43-20037788J27" required>
+        </div>
+
+        <div class="form-row">
+          <label class="label" for="f-reg">Registration <span class="req">*</span></label>
+          <input type="text" id="f-reg" placeholder="e.g. DM 154752/19" required>
+          <div class="hint" id="slug-preview">URL slug: &mdash;</div>
+        </div>
+
+        <div class="form-row">
+          <label class="label" for="f-serial">Certificate Serial</label>
+          <input type="text" id="f-serial" placeholder="e.g. IWH 045089 (optional)">
+        </div>
+
+        <div class="form-row">
+          <label class="label" for="f-issue">Issue Date <span class="req">*</span></label>
+          <input type="date" id="f-issue" required>
+        </div>
+
+        <div class="form-row">
+          <label class="label" for="f-expiry">Expiry Date <span class="req">*</span></label>
+          <input type="date" id="f-expiry" required>
+        </div>
+
+        <div class="form-row full">
+          <label class="label" for="f-designation">Designation</label>
+          <input type="text" id="f-designation" value="Rope Access Technician">
+        </div>
+
+        <div class="form-row full actions">
+          <button type="submit" class="btn-primary" id="single-generate">Generate &amp; Download</button>
+          <button type="button" class="btn-ghost" id="single-reset">Reset</button>
+        </div>
+
+      </form>
+    </div>
+
+    <div class="card results" id="single-results" hidden>
+      <div class="card-head">
+        <h2>Result</h2>
+        <p>Download the stamped PDF for printing, plus a zip of the verification page and registry updates to drop into your <code>vercel-verify/</code> project folder before pushing to GitHub.</p>
+      </div>
+      <div class="results-grid">
+        <div class="result-thumb">
+          <canvas id="result-canvas"></canvas>
+          <div class="thumb-label" id="result-label">Stamped PDF preview</div>
+        </div>
+        <div class="result-actions">
+          <button class="btn-secondary" data-download="pdf">Stamped PDF</button>
+          <button class="btn-secondary" data-download="qr">QR PNG</button>
+          <button class="btn-secondary" data-download="page">Verification page HTML</button>
+          <button class="btn-primary" data-download="zip">Full project zip</button>
+          <p class="result-hint" id="result-hint"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB: BATCH -->
+  <section class="panel" id="tab-batch" hidden>
+    <div class="card">
+      <div class="card-head">
+        <h2>Batch upload</h2>
+        <p>Upload a folder of certificate PNGs and a CSV describing each member. The CSV's <code>png</code> column should match the filenames of the uploaded PNGs.</p>
+      </div>
+
+      <form id="batch-form" class="form-grid">
+
+        <div class="form-row full">
+          <label class="label">Certificate PNGs (multiple)</label>
+          <div class="dropzone" id="batch-dropzone">
+            <input type="file" id="batch-png-input" accept="image/png,image/jpeg" multiple hidden>
+            <div class="dz-inner">
+              <div class="dz-icon">+</div>
+              <div class="dz-text">Drop multiple PNGs here, or <span class="link">browse</span></div>
+              <div class="dz-hint" id="batch-png-count">No files selected yet</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <label class="label">CSV file</label>
+          <div class="dropzone" id="csv-dropzone">
+            <input type="file" id="csv-input" accept=".csv,text/csv" hidden>
+            <div class="dz-inner">
+              <div class="dz-icon">+</div>
+              <div class="dz-text">Drop a CSV here, or <span class="link">browse</span></div>
+              <div class="dz-hint" id="csv-name">No CSV selected</div>
+            </div>
+          </div>
+          <div class="hint">Required columns: <code>png,name,id,reg,issue,expiry</code>. Optional: <code>designation,serial</code>.</div>
+        </div>
+
+        <div class="form-row full actions">
+          <button type="submit" class="btn-primary" id="batch-generate">Process All &amp; Download Zip</button>
+          <button type="button" class="btn-ghost" id="batch-reset">Reset</button>
+        </div>
+
+      </form>
+    </div>
+
+    <div class="card" id="batch-log-card" hidden>
+      <div class="card-head">
+        <h2>Processing log</h2>
+        <p id="batch-summary"></p>
+      </div>
+      <div class="batch-log" id="batch-log"></div>
+    </div>
+  </section>
+
+  <!-- TAB: MEMBERS -->
+  <section class="panel" id="tab-members" hidden>
+    <div class="card">
+      <div class="card-head">
+        <h2>Registered members</h2>
+        <p>Loaded from <code>members.json</code> in the project root. Remove a member here to update the registry; the verification page and PDF are kept on disk unless you delete them manually.</p>
+        <div class="members-actions">
+          <button class="btn-secondary" id="members-reload">Reload</button>
+          <button class="btn-primary" id="members-download-all">Download full project zip</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="members-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>ID</th>
+              <th>Reg</th>
+              <th>Expiry</th>
+              <th>Slug</th>
+              <th class="ta-r">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="members-tbody">
+            <tr><td colspan="6" class="ta-c muted">Loading&hellip;</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>IWH Certificate Generator &middot; runs entirely in your browser; nothing is uploaded to any server.</p>
+  </div>
+</footer>
+
+<!-- CDN libs: QR (qrcode-generator), pdf-lib, JSZip, FileSaver -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
